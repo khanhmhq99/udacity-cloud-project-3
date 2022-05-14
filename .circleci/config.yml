@@ -40,9 +40,7 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
-      - run:
-          name: Build front-end
-          command: ""
+      - run: echo "this is build front-end"
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -54,9 +52,7 @@ jobs:
       - checkout
       - restore_cache:
           keys: [backend-build]
-      - run:
-          name: Back-end build
-          command: ""
+      - run: echo "this is build Back-end"
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
