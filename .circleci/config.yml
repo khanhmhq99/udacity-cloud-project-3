@@ -229,66 +229,66 @@ run-migrations:
     - destroy-environments:
         workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
-deploy-frontend:
-  docker:
-    - image: sleavely/node-awscli:14.x
-  steps:
-    - checkout
-    - attach_workspace:
-        at: ~/
-    - run:
-        name: Get backend url
-        command: |
-          export BACKEND_IP=$(aws ec2 describe-instances \
-          --query 'Reservations[*].Instances[*].PublicDnsName' \
-          --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-          --output text)
-          export API_URL="http://${BACKEND_IP}:3030"
-          echo "${API_URL}"
-          echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-          curl https://kvdb.io/5M5hoa26fyVb9J7MW51bq5/apiurl -d ${API_URL}
-          cat frontend/.env
+# deploy-frontend:
+#   docker:
+#     - image: sleavely/node-awscli:14.x
+#   steps:
+#     - checkout
+#     - attach_workspace:
+#         at: ~/
+#     - run:
+#         name: Get backend url
+#         command: |
+#           export BACKEND_IP=$(aws ec2 describe-instances \
+#           --query 'Reservations[*].Instances[*].PublicDnsName' \
+#           --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+#           --output text)
+#           export API_URL="http://${BACKEND_IP}:3030"
+#           echo "${API_URL}"
+#           echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+#           curl https://kvdb.io/5M5hoa26fyVb9J7MW51bq5/apiurl -d ${API_URL}
+#           cat frontend/.env
 
-    - run:
-        name: Deploy frontend objects
-        command: |
-          cd frontend
-          npm install
-          npm run build
-          tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-          aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+#     - run:
+#         name: Deploy frontend objects
+#         command: |
+#           cd frontend
+#           npm install
+#           npm run build
+#           tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+#           aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
-    - destroy-environments:
-        workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+#     - destroy-environments:
+#         workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
-deploy-backend:
-  docker:
-    - image: python:3.9.0-alpine
-  steps:
-    - checkout
-    - add_ssh_keys:
-        fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
-    - attach_workspace:
-        at: ~/
-    - run:
-        name: Install dependencies
-        command: |
-          apk add --update tar gzip ansible nodejs npm
-          apk --no-cache add curl
-          pip install awscli
-    - run:
-        name: Deploy backend
-        command: |
-          cd backend
-          npm i
-          npm run build
-          cd ..
-          tar -C backend -czvf artifact.tar.gz .
-          cp artifact.tar.gz .circleci/ansible
-          cd .circleci/ansible
-          ansible-playbook -i inventory.txt deploy-backend.yml
-    - destroy-environments:
-        workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+# deploy-backend:
+#   docker:
+#     - image: python:3.9.0-alpine
+#   steps:
+#     - checkout
+#     - add_ssh_keys:
+#         fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
+#     - attach_workspace:
+#         at: ~/
+#     - run:
+#         name: Install dependencies
+#         command: |
+#           apk add --update tar gzip ansible nodejs npm
+#           apk --no-cache add curl
+#           pip install awscli
+#     - run:
+#         name: Deploy backend
+#         command: |
+#           cd backend
+#           npm i
+#           npm run build
+#           cd ..
+#           tar -C backend -czvf artifact.tar.gz .
+#           cp artifact.tar.gz .circleci/ansible
+#           cd .circleci/ansible
+#           ansible-playbook -i inventory.txt deploy-backend.yml
+#     - destroy-environments:
+#         workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
 #   smoke-test:
 #     docker:
@@ -369,10 +369,10 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
