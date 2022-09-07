@@ -134,7 +134,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-        fingerprints: ["01:ab:11:f3:a1:c0:b0:a2:8d:b1:bb:e9:38:af:8c:4d"]
+        fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
       - run:
           name: Install dependencies
           command: yum install -y tar gzip
@@ -184,7 +184,7 @@ configure-infrastructure:
   steps:
     - checkout
     - add_ssh_keys:
-        fingerprints: ["01:ab:11:f3:a1:c0:b0:a2:8d:b1:bb:e9:38:af:8c:4d"]
+        fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
     - attach_workspace:
         at: ~/
     - run:
@@ -208,7 +208,7 @@ run-migrations:
     - restore_cache:
         keys: [backend-build]
     - add_ssh_keys:
-        fingerprints: ["01:ab:11:f3:a1:c0:b0:a2:8d:b1:bb:e9:38:af:8c:4d"]
+        fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
     - attach_workspace:
         at: ~/
     - run:
@@ -267,7 +267,7 @@ run-migrations:
 #   steps:
 #     - checkout
 #     - add_ssh_keys:
-#         fingerprints: ["01:ab:11:f3:a1:c0:b0:a2:8d:b1:bb:e9:38:af:8c:4d"]
+#         fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
 #     - attach_workspace:
 #         at: ~/
 #     - run:
