@@ -4,7 +4,6 @@ import { AboutInfo } from './about.interface';
 import { Product } from '../../modules/domain/orders/entities/product.entity';
 import { Order } from '../../modules/domain/orders/entities/order.entity';
 import { Employee } from '../domain/employees/entities/employee.entity';
-
 export interface EnvConfig {
   VERSION: string;
   NODE_ENV: string;
@@ -23,14 +22,11 @@ export interface EnvConfig {
   AUTH0_DOMAIN: string;
   AUTH0_AUDIENCE: string;
 }
-
 export class ConfigService {
   private readonly envConfig: EnvConfig;
-
   constructor() {
     this.envConfig = this.validateInput(process.env);
   }
-
   private validateInput(envConfig): EnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
       TYPEORM_CONNECTION: Joi.string().default('postgres'),
@@ -55,46 +51,38 @@ export class ConfigService {
       // AUTH0_DOMAIN: Joi.string().required(),
       // AUTH0_AUDIENCE: Joi.string().required(),
     }).unknown();
-    const { error, value: validatedEnvConfig } = envVarsSchema.validate(envConfig);
-
-
+    const { error, value: validatedEnvConfig } = envVarsSchema.validate(
+      envConfig,
+    );
     if (error) {
       throw new Error(`Config validation error: ${error.message}`);
     }
-
     return validatedEnvConfig;
   }
-
   get about(): AboutInfo {
     return {
       version: process.env.npm_package_version,
       environment: this.envConfig.NODE_ENV,
     };
   }
-
   get NODE_ENV(): string {
     return this.envConfig.NODE_ENV;
   }
-
   get PORT(): number {
     return this.envConfig.BACKEND_PORT;
   }
-
   get LOGGLY_SUBDOMAIN(): string {
     return this.envConfig.LOGGLY_SUBDOMAIN;
   }
-
   get LOGGLY_TOKEN(): string {
     return this.envConfig.LOGGLY_TOKEN;
   }
-
   get CORS_WHITELIST(): string[] {
     if (!this.envConfig.CORS_WHITELIST) {
       return [];
     }
     return this.envConfig.CORS_WHITELIST.split(',');
   }
-
   get TypeOrmDatabase(): TypeOrmModuleOptions {
     return {
       type: this.envConfig.TYPEORM_CONNECTION,
@@ -108,13 +96,12 @@ export class ConfigService {
       logging: this.envConfig.TYPEORM_LOGGING === 'true',
       extra: { max: 4, min: 1 },
       synchronize: false,
+      autoLoadEntities: true,
     };
   }
-
   get AUTH0_DOMAIN(): string {
     return this.envConfig.AUTH0_DOMAIN;
   }
-
   get AUTH0_AUDIENCE(): string {
     return this.envConfig.AUTH0_AUDIENCE;
   }
