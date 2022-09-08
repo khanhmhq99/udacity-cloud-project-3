@@ -134,7 +134,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
+          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
       - run:
           name: Install dependencies
           command: yum install -y tar gzip
@@ -184,7 +184,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
+          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
       - attach_workspace:
           at: ~/
       - run:
@@ -208,7 +208,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - add_ssh_keys:
-          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
+          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
       - attach_workspace:
           at: ~/
       - run:
@@ -267,7 +267,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
+          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
       - attach_workspace:
           at: ~/
       - run:
@@ -375,7 +375,7 @@ workflows:
       - scan-frontend:
           requires: [build-frontend]
       - deploy-infrastructure:
-          requires: [test-backend, scan-frontend, scan-backend]
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
               only: [main]
