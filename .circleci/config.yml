@@ -1,11 +1,6 @@
 version: 2.1
 orbs:
   slack: circleci/slack@4.10.1
-parameters:
-  workflow_id:
-    type: string
-    default: "2908"
-
 commands:
   destroy-environments:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -139,7 +134,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
+          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
       - run:
           name: Install dependencies
           command: yum install -y tar gzip
@@ -189,7 +184,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
+          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
       - attach_workspace:
           at: ~/
       - run:
@@ -213,7 +208,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - add_ssh_keys:
-          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
+          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
       - attach_workspace:
           at: ~/
       - run:
@@ -272,7 +267,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["e8:f2:4f:72:32:10:05:92:4a:9e:d9:33:f6:4c:9a:3c"]
+          fingerprints: ["3b:54:3e:fa:2d:0a:2d:eb:ab:83:b0:31:4e:f1:ad:9e:15:47:89:24"]
       - attach_workspace:
           at: ~/
       - run:
