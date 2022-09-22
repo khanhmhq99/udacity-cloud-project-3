@@ -373,7 +373,7 @@ jobs:
               --no-paginate --output text)
             STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
-              if [[ "${OldWorkflowID}" =~ "${STACKS[@]}"  ]]
+              if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
               then
                 echo "--------------- Delete Confirmed ---------------"
                 unset OldWorkflowID
