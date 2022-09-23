@@ -377,8 +377,6 @@ jobs:
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               echo "--------------- Delete Confirmed ---------------"
-              unset OldWorkflowID
-              OldWorkflowID=$(echo $stackitem | sed -r 's/udapeople-.*-//g')
               aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
               aws cloudformation delete-stack --stack-name Udapeople-backend-${OldWorkflowID}
               aws cloudformation delete-stack --stack-name Udapeople-frontend-${OldWorkflowID}
